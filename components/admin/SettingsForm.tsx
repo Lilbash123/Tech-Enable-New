@@ -36,8 +36,17 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
     const fd = new FormData();
     fd.append("file", file);
     const result = await uploadLogoAction(fd);
-    setUploading(false);
-    if (result.url) setLogoUrl(result.url);
+setUploading(false);
+
+if (result.error) {
+  alert(result.error);
+  console.log(result.error);
+  return;
+}
+
+if (result.url) {
+  setLogoUrl(result.url);
+}
   }
 
   return (
