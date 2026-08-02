@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import AuthLayout from "@/components/AuthLayout";
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
@@ -20,10 +21,11 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
     setLoading(false);
 
@@ -42,10 +44,15 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthLayout title="Welcome back" subtitle="Log in to keep your progress ring growing.">
+    <AuthLayout
+      title="Welcome back"
+      subtitle="Log in to keep your progress ring growing."
+    >
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="label-field" htmlFor="email">Email address</label>
+          <label className="label-field" htmlFor="email">
+            Email address
+          </label>
           <input
             id="email"
             type="email"
@@ -56,13 +63,20 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+
         <div>
           <div className="flex items-center justify-between">
-            <label className="label-field" htmlFor="password">Password</label>
-            <Link href="/forgot-password" className="mb-1.5 text-xs font-semibold text-teal-dark hover:underline">
+            <label className="label-field" htmlFor="password">
+              Password
+            </label>
+            <Link
+              href="/forgot-password"
+              className="mb-1.5 text-xs font-semibold text-teal-dark hover:underline"
+            >
               Forgot password?
             </Link>
           </div>
+
           <input
             id="password"
             type="password"
@@ -75,20 +89,37 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
+          <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+            {error}
+          </p>
         )}
 
-        <button type="submit" disabled={loading} className="btn-primary w-full">
+        <button
+          type="submit"
+          disabled={loading}
+          className="btn-primary w-full"
+        >
           {loading ? "Logging in…" : "Log in"}
         </button>
       </form>
 
       <p className="mt-6 text-center text-sm text-slate">
         Don&apos;t have an account?{" "}
-        <Link href="/signup" className="font-semibold text-teal-dark hover:underline">
+        <Link
+          href="/signup"
+          className="font-semibold text-teal-dark hover:underline"
+        >
           Sign up free
         </Link>
       </p>
     </AuthLayout>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
