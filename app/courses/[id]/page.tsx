@@ -14,6 +14,11 @@ export default async function CourseDetailPage({ params }: { params: { id: strin
     .single();
 
   if (!course) notFound();
+const { data: lessons } = await supabase
+  .from("lessons")
+  .select("*")
+  .eq("course_id", course.id)
+  .order("position");
 
   const {
     data: { user },
