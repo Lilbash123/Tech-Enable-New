@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { completeLesson } from "@/app/courses/actions";
+import { completeLesson } from "@/app/my-courses/actions";
 
 type Props = {
   lessonId: string;
