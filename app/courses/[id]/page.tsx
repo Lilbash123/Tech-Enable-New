@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EnrollButton from "@/components/EnrollButton";
 import { createClient } from "@/lib/supabase/server";
+import CompleteLessonButton from "@/components/CompleteLessonButton";
 
 export default async function CourseDetailPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
@@ -111,13 +112,14 @@ const { data: lessons } = await supabase
         <div>
           <h3 className="font-medium text-ink">{lesson.title}</h3>
 
-{alreadyEnrolled && (
-  <button
-    className="mt-2 rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
-  >
-    ✅ Complete Lesson
-  </button>
+{alreadyEnrolled && user && (
+  <CompleteLessonButton
+    lessonId={lesson.id}
+    studentId={user.id}
+    courseId={course.id}
+  />
 )}
+    className="mt-2 rounded bg-gre
 {alreadyEnrolled ? (
   lesson.video_url && (
     <video
