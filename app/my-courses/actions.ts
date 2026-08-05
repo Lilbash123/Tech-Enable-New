@@ -9,7 +9,6 @@ export async function completeLesson(
   const supabase = createClient();
 
   const { error } = await supabase
-    const { error } = await supabase
   .from("lesson_progress")
   .upsert(
     {
