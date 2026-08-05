@@ -9,13 +9,19 @@ export async function completeLesson(
   const supabase = createClient();
 
   const { error } = await supabase
-    .from("lesson_progress")
-    .upsert({
+    const { error } = await supabase
+  .from("lesson_progress")
+  .upsert(
+    {
       lesson_id: lessonId,
       student_id: studentId,
       completed: true,
       completed_at: new Date().toISOString(),
-    });
+    },
+    {
+      onConflict: "student_id,lesson_id",
+    }
+  );
 
   if (error) {
     return {
