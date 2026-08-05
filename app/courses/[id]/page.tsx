@@ -110,6 +110,14 @@ const { data: lessons } = await supabase
       >
         <div>
           <h3 className="font-medium text-ink">{lesson.title}</h3>
+
+{alreadyEnrolled && (
+  <button
+    className="mt-2 rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
+  >
+    ✅ Complete Lesson
+  </button>
+)}
 {alreadyEnrolled ? (
   lesson.video_url && (
     <video
