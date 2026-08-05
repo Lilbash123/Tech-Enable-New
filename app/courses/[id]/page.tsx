@@ -110,7 +110,19 @@ const { data: lessons } = await supabase
       >
         <div>
           <h3 className="font-medium text-ink">{lesson.title}</h3>
-
+{alreadyEnrolled ? (
+  lesson.video_url && (
+    <video
+      controls
+      className="mt-2 w-full rounded-lg"
+      src={lesson.video_url}
+    />
+  )
+) : (
+  <span className="text-xs text-red-500">
+    🔒 Enroll to access Video
+  </span>
+)}
           {alreadyEnrolled ? (
   lesson.pdf_url && (
     <a
