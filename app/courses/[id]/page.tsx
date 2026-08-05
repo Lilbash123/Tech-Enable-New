@@ -111,16 +111,22 @@ const { data: lessons } = await supabase
         <div>
           <h3 className="font-medium text-ink">{lesson.title}</h3>
 
-          {lesson.pdf_url && (
-            <a
-              href={lesson.pdf_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 text-sm hover:underline"
-            >
-              📄 View PDF
-            </a>
-          )}
+          {alreadyEnrolled ? (
+  lesson.pdf_url && (
+    <a
+      href={lesson.pdf_url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-600 text-sm hover:underline"
+    >
+      📄 View PDF
+    </a>
+  )
+) : (
+  <span className="text-xs text-red-500">
+    🔒 Enroll to access PDF
+  </span>
+)}
         </div>
 
         <span className="text-xs text-slate-light">
