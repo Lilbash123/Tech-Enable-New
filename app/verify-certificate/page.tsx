@@ -28,11 +28,15 @@ export default function VerifyCertificatePage() {
   .eq("certificate_id", certificateId)
   .single();
 
-    if (error) {
-      setResult(null);
-    } else {
-      setResult(data);
-    }
+    console.log(error);
+console.log(data);
+
+if (error) {
+  alert(error.message);
+  setResult(null);
+} else {
+  setResult(data);
+}
 
     setLoading(false);
   };
