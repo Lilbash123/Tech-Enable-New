@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 
 export default function VerifyCertificatePage() {
   const [certificateId, setCertificateId] = useState("");
@@ -13,17 +12,18 @@ export default function VerifyCertificatePage() {
 
     const supabase = createClient();
 
-    const { data, error } = await supabase
-      .from("certificates")
-      .select("*")
-      .eq("certificate_id", certificateId)
-      .single();
+    const response = await fetch(
+  `/api/verify-certificate?id=${certificateId}`
+);
 
-    if (error) {
-      setResult(null);
-    } else {
-      setResult(data);
-    }
+const data = await response.json();
+
+if (!response.ok) {
+  alert(data.error);
+  setResult(null);
+} else {
+  setResult(data);
+}
 
     setLoading(false);
   };
@@ -50,32 +50,32 @@ export default function VerifyCertificatePage() {
       </button>
 
       {result && (
-        <div className="mt-8 rounded-lg border p-4">
-          <h2 className="text-xl font-bold text-green-600">
-            ✅ Certificate Verified
-          </h2>
+  <div className="mt-8 rounded-lg border p-4">
+    <h2 className="text-xl font-bold text-green-600">
+      ✅ Certificate Verified
+    </h2>
 
-          <p>
-            <strong>Certificate ID:</strong>{" "}
-            {result.certificate_id}
-          </p>
+    <p>
+      <strong>Certificate ID:</strong>{" "}
+      {result.certificate_id}
+    </p>
 
-          <p>
-            <strong>Student ID:</strong>{" "}
-            {result.student_id}
-          </p>
+    <p>
+      <strong>Student:</strong>{" "}
+      {result.student_name}
+    </p>
 
-          <p>
-            <strong>Course ID:</strong>{" "}
-            {result.course_id}
-          </p>
+    <p>
+      <strong>Course:</strong>{" "}
+      {result.course_name}
+    </p>
 
-          <p>
-            <strong>Issued:</strong>{" "}
-            {new Date(result.issued_at).toLocaleString()}
-          </p>
-        </div>
-      )}
+    <p>
+      <strong>Issued:</strong>{" "}
+      {new Date(result.issued_at).toLocaleString()}
+    </p>
+  </div>
+)}
     </div>
   );
 }
