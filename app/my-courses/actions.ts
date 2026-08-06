@@ -62,12 +62,23 @@ console.log("studentId =", studentId);
 console.log("courseId =", courseId);
 console.log("progress =", progress);
 
- const { error: updateError, data } = await supabase
+const { data: enrollment } = await supabase
+  .from("enrollments")
+  .select("id, student_id, course_id")
+  .eq("student_id", studentId)
+  .eq("course_id", courseId);
+
+console.log("ENROLLMENT FOUND:", enrollment);
+
+const { data: updatedRow, error: updateError } = await supabase
   .from("enrollments")
   .update({ progress })
   .eq("student_id", studentId)
   .eq("course_id", courseId)
   .select();
+
+console.log("UPDATE ERROR:", updateError);
+console.log("UPDATED ROW:", updatedRow);
 
 console.log("UPDATE ERROR:", updateError);
 console.log("UPDATED ROW:", data);
