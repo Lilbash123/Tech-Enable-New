@@ -14,59 +14,70 @@ export default function CertificateButton({
   completedAt,
 }: Props) {
   const downloadCertificate = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF("landscape", "mm", "a4");
+
+    // Border
+    doc.setDrawColor(0, 170, 150);
+    doc.setLineWidth(2);
+    doc.rect(10, 10, 277, 190);
+
+    // Company
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(30);
+    doc.setTextColor(0, 170, 150);
+    doc.text("Tech Enable Solution", 148, 30, { align: "center" });
 
     // Title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(24);
-    doc.text("Tech Enable Solution", 105, 25, { align: "center" });
-
-    // Subtitle
-    doc.setFontSize(18);
-    doc.text("Certificate of Completion", 105, 45, {
-      align: "center",
-    });
-
-    // Body
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(14);
-
-    doc.text("This certificate is proudly presented to", 105, 70, {
-      align: "center",
-    });
-
-    doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
-    doc.text(studentName, 105, 85, {
+    doc.setTextColor(0, 0, 0);
+    doc.text("CERTIFICATE OF COMPLETION", 148, 50, {
       align: "center",
     });
 
-    doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
-    doc.text("for successfully completing", 105, 100, {
+    doc.text("This certificate is proudly presented to", 148, 70, {
       align: "center",
     });
 
+    // Student
+    doc.setFontSize(28);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.text(courseTitle, 105, 115, {
+    doc.text(studentName, 148, 92, {
       align: "center",
     });
 
+    doc.setFontSize(14);
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
+    doc.text("For successfully completing the course", 148, 112, {
+      align: "center",
+    });
 
+    // Course
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 170, 150);
+    doc.text(courseTitle, 148, 132, {
+      align: "center",
+    });
+
+    // Date
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
     doc.text(
-      `Date: ${
+      `Completion Date: ${
         completedAt
           ? new Date(completedAt).toLocaleDateString()
           : new Date().toLocaleDateString()
       }`,
       20,
-      160
+      180
     );
 
-    doc.text("Authorized by Tech Enable Solution", 20, 180);
+    // Signature
+    doc.line(200, 175, 260, 175);
+    doc.text("Authorized Signature", 230, 183, {
+      align: "center",
+    });
 
     doc.save(`${courseTitle}-Certificate.pdf`);
   };
@@ -74,7 +85,7 @@ export default function CertificateButton({
   return (
     <button
       onClick={downloadCertificate}
-      className="rounded-lg bg-teal px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+      className="rounded-lg bg-teal px-4 py-2 text-sm font-semibold text-white"
     >
       Download Certificate
     </button>
