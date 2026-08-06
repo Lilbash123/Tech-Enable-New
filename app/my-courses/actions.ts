@@ -58,6 +58,9 @@ const completedLessons = completedLessonsData.length;
     totalLessons && totalLessons > 0
       ? Math.round(((completedLessons ?? 0) / totalLessons) * 100)
       : 0;
+console.log("studentId =", studentId);
+console.log("courseId =", courseId);
+console.log("progress =", progress);
 
  const { error: updateError, data } = await supabase
   .from("enrollments")
