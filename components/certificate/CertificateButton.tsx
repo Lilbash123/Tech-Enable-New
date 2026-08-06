@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
+import { createClient } from "@/lib/supabase/client";
 
 type Props = {
+  studentId: string;
+  courseId: string;
   studentName: string;
   courseTitle: string;
   completedAt?: string;
@@ -21,6 +24,8 @@ const generateCertificateId = () => {
 };
 
 export default function CertificateButton({
+  studentId,
+  courseId,
   studentName,
   courseTitle,
   completedAt,
@@ -42,8 +47,9 @@ export default function CertificateButton({
       .catch(() => {});
   }, []);
 
-  const downloadCertificate = () => {
+  const downloadCertificate = async () => {
 const certificateId = generateCertificateId();
+const supabase = createClient();
     const doc = new jsPDF("landscape", "mm", "a4");
 
     // Border
@@ -124,6 +130,19 @@ doc.text(
       align: "center",
     });
 
+const { error } = await supabase
+  .from("certificates")
+  .insert({
+    certificate_id: certificateId,
+    student_id: studentId,
+    course_id: courseId,
+  });
+
+if (error) {
+  console.error(error);
+  alert(error.message);
+  return;
+}
     doc.save(`${courseTitle}-Certificate.pdf`);
   };
 

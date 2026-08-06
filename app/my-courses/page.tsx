@@ -111,11 +111,14 @@ export default async function MyCoursesPage({
                 </p>
 {enrollment.progress === 100 && (
   <div className="mt-4">
-    <CertificateButton
-      studentName={user.user_metadata?.full_name || user.email || "Student"}
-      courseTitle={enrollment.course?.title || "Course"}
-      completedAt={new Date().toISOString()}
-    />
+<CertificateButton
+  studentId={user.id}
+  courseId={enrollment.course?.id || ""}
+  studentName={user.user_metadata?.full_name || user.email || "Student"}
+  courseTitle={enrollment.course?.title || "Course"}
+  completedAt={new Date().toISOString()}
+/>    
+
   </div>
 )}
               </Link>
