@@ -119,7 +119,7 @@ const { data: lessons } = await supabase
     courseId={course.id}
   />
 )}
-    className="mt-2 rounded bg-gre
+
 {alreadyEnrolled ? (
   lesson.video_url && (
     <video
