@@ -10,7 +10,6 @@ export default function VerifyCertificatePage() {
   const verifyCertificate = async () => {
     setLoading(true);
 
-    const supabase = createClient();
 
     const response = await fetch(
   `/api/verify-certificate?id=${certificateId}`
