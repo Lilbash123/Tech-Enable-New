@@ -18,9 +18,9 @@ export default function CompleteLessonButton({
 
   return (
     <button
-      className="mt-2 rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700 disabled:opacity-50"
+      className="mt-2 rounded bg-green-600 px-3 py-1 text-sm text-white"
       disabled={isPending}
-      onClick={() =>
+      onClick={() => {
         startTransition(async () => {
           const result = await completeLesson(
             lessonId,
@@ -34,8 +34,8 @@ export default function CompleteLessonButton({
           } else {
             alert(result.error);
           }
-        })
-      }
+        });
+      }}
     >
       {isPending ? "Saving..." : "✅ Complete Lesson"}
     </button>
