@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ProgressArc from "@/components/ProgressArc";
 import { createClient } from "@/lib/supabase/server";
 import type { Course, Enrollment } from "@/lib/types";
+import CertificateButton from "@/components/certificate/CertificateButton";
 
 export default async function MyCoursesPage({
   searchParams,
@@ -108,6 +109,15 @@ export default async function MyCoursesPage({
                     year: "numeric",
                   })}
                 </p>
+{enrollment.progress === 100 && (
+  <div className="mt-4">
+    <CertificateButton
+      studentName={user.user_metadata?.full_name || user.email || "Student"}
+      courseTitle={enrollment.course?.title || "Course"}
+      completedAt={new Date().toISOString()}
+    />
+  </div>
+)}
               </Link>
             ))}
           </div>
