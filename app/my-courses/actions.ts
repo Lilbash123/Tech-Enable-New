@@ -59,11 +59,15 @@ const completedLessons = completedLessonsData.length;
       ? Math.round(((completedLessons ?? 0) / totalLessons) * 100)
       : 0;
 
-  await supabase
-    .from("enrollments")
-    .update({ progress })
-    .eq("student_id", studentId)
-    .eq("course_id", courseId);
+ const { error: updateError, data } = await supabase
+  .from("enrollments")
+  .update({ progress })
+  .eq("student_id", studentId)
+  .eq("course_id", courseId)
+  .select();
+
+console.log("UPDATE ERROR:", updateError);
+console.log("UPDATED ROW:", data);
 
   return {
     success: true,
