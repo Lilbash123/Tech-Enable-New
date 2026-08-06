@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 
 type Props = {
@@ -13,6 +14,23 @@ export default function CertificateButton({
   courseTitle,
   completedAt,
 }: Props) {
+  const [logo, setLogo] = useState("");
+
+  useEffect(() => {
+    fetch("/logo.png")
+      .then((res) => res.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setLogo(reader.result as string);
+        };
+
+        reader.readAsDataURL(blob);
+      })
+      .catch(() => {});
+  }, []);
+
   const downloadCertificate = () => {
     const doc = new jsPDF("landscape", "mm", "a4");
 
@@ -21,11 +39,18 @@ export default function CertificateButton({
     doc.setLineWidth(2);
     doc.rect(10, 10, 277, 190);
 
+    // Logo
+    if (logo) {
+      doc.addImage(logo, "PNG", 20, 18, 24, 24);
+    }
+
     // Company
     doc.setFont("helvetica", "bold");
     doc.setFontSize(30);
     doc.setTextColor(0, 170, 150);
-    doc.text("Tech Enable Solution", 148, 30, { align: "center" });
+    doc.text("Tech Enable Solution", 148, 30, {
+      align: "center",
+    });
 
     // Title
     doc.setFontSize(22);
