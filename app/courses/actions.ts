@@ -33,11 +33,25 @@ export async function completeLesson(
     .eq("course_id", courseId);
 
   // 3. Count completed lessons
-  const { count: completedLessons } = await supabase
-    .from("lesson_progress")
-    .select("lesson_id", { count: "exact", head: true })
-    .eq("student_id", studentId)
-    .eq("completed", true);
+  
+const { data: completedLessonsData, error: completedError } = await supabase
+  .from("lesson_progress")
+  .select(`
+    lesson_id,
+    lessons!inner(course_id)
+  `)
+  .eq("student_id", studentId)
+  .eq("completed", true)
+  .eq("lessons.course_id", courseId);
+
+if (completedError) {
+  return {
+    success: false,
+    error: completedError.message,
+  };
+}
+
+const completedLessons = completedLessonsData.length;
 
   const progress =
     totalLessons && totalLessons > 0
