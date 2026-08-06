@@ -18,10 +18,10 @@ export default function VerifyCertificatePage() {
   .select(`
     certificate_id,
     issued_at,
-    profiles:student_id (
+    profiles!certificates_student_id_fkey (
       full_name
     ),
-    courses:course_id (
+    courses!certificates_course_id_fkey (
       title
     )
   `)
@@ -76,6 +76,11 @@ if (error) {
           <p>
   <strong>Student:</strong>{" "}
   {result.profiles?.full_name}
+</p>
+
+<p>
+  <strong>Course:</strong>{" "}
+  {result.courses?.title}
 </p>
 
 <p>
