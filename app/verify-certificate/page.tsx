@@ -13,30 +13,17 @@ export default function VerifyCertificatePage() {
 
     const supabase = createClient();
 
-   const { data, error } = await supabase
-  .from("certificates")
-  .select(`
-    certificate_id,
-    issued_at,
-    profiles!certificates_student_id_fkey (
-      full_name
-    ),
-    courses!certificates_course_id_fkey (
-      title
-    )
-  `)
-  .eq("certificate_id", certificateId)
-  .single();
+    const { data, error } = await supabase
+      .from("certificates")
+      .select("*")
+      .eq("certificate_id", certificateId)
+      .single();
 
-    console.log(error);
-console.log(data);
-
-if (error) {
-  alert(error.message);
-  setResult(null);
-} else {
-  setResult(data);
-}
+    if (error) {
+      setResult(null);
+    } else {
+      setResult(data);
+    }
 
     setLoading(false);
   };
@@ -74,19 +61,14 @@ if (error) {
           </p>
 
           <p>
-  <strong>Student:</strong>{" "}
-  {result.profiles?.full_name}
-</p>
+            <strong>Student ID:</strong>{" "}
+            {result.student_id}
+          </p>
 
-<p>
-  <strong>Course:</strong>{" "}
-  {result.courses?.title}
-</p>
-
-<p>
-  <strong>Course:</strong>{" "}
-  {result.courses?.title}
-</p>
+          <p>
+            <strong>Course ID:</strong>{" "}
+            {result.course_id}
+          </p>
 
           <p>
             <strong>Issued:</strong>{" "}
