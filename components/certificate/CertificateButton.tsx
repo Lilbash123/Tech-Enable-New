@@ -9,6 +9,17 @@ type Props = {
   completedAt?: string;
 };
 
+const generateCertificateId = () => {
+  const random = Math.random()
+    .toString(36)
+    .substring(2, 8)
+    .toUpperCase();
+
+  const year = new Date().getFullYear();
+
+  return `TES-${year}-${random}`;
+};
+
 export default function CertificateButton({
   studentName,
   courseTitle,
@@ -32,6 +43,7 @@ export default function CertificateButton({
   }, []);
 
   const downloadCertificate = () => {
+const certificateId = generateCertificateId();
     const doc = new jsPDF("landscape", "mm", "a4");
 
     // Border
@@ -98,6 +110,14 @@ export default function CertificateButton({
       180
     );
 
+// Certificate ID
+doc.setFontSize(12);
+doc.setTextColor(0, 0, 0);
+doc.text(
+  `Certificate ID: ${certificateId}`,
+  20,
+  165
+);
     // Signature
     doc.line(200, 175, 260, 175);
     doc.text("Authorized Signature", 230, 183, {
