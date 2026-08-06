@@ -81,7 +81,7 @@ console.log("UPDATE ERROR:", updateError);
 console.log("UPDATED ROW:", updatedRow);
 
 console.log("UPDATE ERROR:", updateError);
-console.log("UPDATED ROW:", data);
+console.log("UPDATED ROW:", updatedRow);
 
   return {
     success: true,
