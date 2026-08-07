@@ -181,6 +181,13 @@ export default async function HomePage() {
               <Link href="/courses?type=premium" className="btn-outline">
                 Browse premium courses
               </Link>
+<Link
+  href="#contact"
+  className="btn-outline"
+>
+  Contact Us
+</Link>
+
             </div>
 
             <div className="mt-12 flex flex-wrap gap-10">
@@ -342,6 +349,103 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+
+{/* Contact Form */}
+<section id="contact" className="mx-auto max-w-7xl px-6 py-20">
+  <div className="rounded-3xl bg-white p-10 shadow-xl border border-gray-200">
+
+    <div className="text-center">
+      <span className="inline-block rounded-full bg-teal-100 px-4 py-1 text-sm font-semibold text-teal-700">
+        Contact Us
+      </span>
+
+      <h2 className="mt-4 text-4xl font-bold text-gray-900">
+        We'd Love to Hear From You
+      </h2>
+
+      <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+        Have questions about our courses, certificates, payments,
+        or anything else? Fill out the form below and our team
+        will get back to you as soon as possible.
+      </p>
+    </div>
+
+    <div className="mt-10">
+
+<form className="grid gap-6 md:grid-cols-2">
+
+  <div>
+    <label className="mb-2 block text-sm font-semibold text-gray-700">
+      Full Name
+    </label>
+    <input
+      type="text"
+      placeholder="Enter your full name"
+      className="w-full rounded-xl border border-gray-300 p-4 outline-none transition focus:border-teal-600"
+    />
+  </div>
+
+  <div>
+    <label className="mb-2 block text-sm font-semibold text-gray-700">
+      Email Address
+    </label>
+    <input
+      type="email"
+      placeholder="example@email.com"
+      className="w-full rounded-xl border border-gray-300 p-4 outline-none transition focus:border-teal-600"
+    />
+  </div>
+
+  <div>
+    <label className="mb-2 block text-sm font-semibold text-gray-700">
+      Phone Number
+    </label>
+    <input
+      type="tel"
+      placeholder="+234..."
+      className="w-full rounded-xl border border-gray-300 p-4 outline-none transition focus:border-teal-600"
+    />
+  </div>
+
+  <div>
+    <label className="mb-2 block text-sm font-semibold text-gray-700">
+      Subject
+    </label>
+    <input
+      type="text"
+      placeholder="Subject"
+      className="w-full rounded-xl border border-gray-300 p-4 outline-none transition focus:border-teal-600"
+    />
+  </div>
+
+  <div className="md:col-span-2">
+    <label className="mb-2 block text-sm font-semibold text-gray-700">
+      Message
+    </label>
+
+    <textarea
+      rows={6}
+      placeholder="Write your message here..."
+      className="w-full rounded-xl border border-gray-300 p-4 outline-none transition focus:border-teal-600"
+    />
+  </div>
+
+  <div className="md:col-span-2 flex justify-center">
+    <button
+      type="submit"
+      className="rounded-xl bg-teal-600 px-10 py-4 text-lg font-semibold text-white transition hover:bg-teal-700"
+    >
+      Send Message
+    </button>
+  </div>
+
+</form>
+
+    </div>
+
+  </div>
+</section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-6 py-20">
