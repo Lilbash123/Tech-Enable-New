@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import { createClient } from "@/lib/supabase/client";
+import QRCode from "qrcode";
 
 type Props = {
   studentId: string;
@@ -51,6 +52,10 @@ export default function CertificateButton({
 const certificateId = generateCertificateId();
 const supabase = createClient();
     const doc = new jsPDF("landscape", "mm", "a4");
+const verifyUrl =
+  `https://tech-enable-new.vercel.app/verify-certificate?id=${certificateId}`;
+
+const qrCode = await QRCode.toDataURL(verifyUrl);
 
     // =========================
 // Premium Double Border
@@ -152,6 +157,24 @@ doc.text(
   20,
   165
 );
+
+// QR Code
+doc.addImage(
+  qrCode,
+  "PNG",
+  235,   // X
+  145,   // Y
+  35,    // Width
+  35     // Height
+);
+
+// Label
+doc.setFontSize(10);
+doc.setFont("helvetica", "normal");
+doc.text("Scan to Verify", 252, 184, {
+  align: "center",
+}); 
+
     // Signature
 const signature = new Image();
 signature.src = "/signature.png";
