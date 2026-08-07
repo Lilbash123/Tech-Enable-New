@@ -52,10 +52,19 @@ const certificateId = generateCertificateId();
 const supabase = createClient();
     const doc = new jsPDF("landscape", "mm", "a4");
 
-    // Border
-    doc.setDrawColor(0, 170, 150);
-    doc.setLineWidth(2);
-    doc.rect(10, 10, 277, 190);
+    // =========================
+// Premium Double Border
+// =========================
+
+// Outer Gold Border
+doc.setDrawColor(212, 175, 55);
+doc.setLineWidth(2.5);
+doc.rect(8, 8, 281, 194);
+
+// Inner Teal Border
+doc.setDrawColor(0, 170, 150);
+doc.setLineWidth(1.5);
+doc.rect(12, 12, 273, 186);
 
     // Logo
     if (logo) {
@@ -72,10 +81,16 @@ const supabase = createClient();
 
     // Title
     doc.setFontSize(22);
-    doc.setTextColor(0, 0, 0);
-    doc.text("CERTIFICATE OF COMPLETION", 148, 50, {
-      align: "center",
-    });
+
+// Gold color
+doc.setTextColor(212, 175, 55);
+
+doc.text("CERTIFICATE OF COMPLETION", 148, 50, {
+  align: "center",
+});
+
+// Komawa Black
+doc.setTextColor(0, 0, 0);
 
     doc.setFontSize(14);
     doc.text("This certificate is proudly presented to", 148, 70, {
