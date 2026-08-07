@@ -49,6 +49,38 @@ export default async function HomePage() {
                 Browse premium courses
               </Link>
             </div>
+{/* Verify Certificate */}
+<div className="mt-8 max-w-md rounded-2xl border border-line bg-white p-5 shadow-card">
+  <h3 className="font-display text-lg font-bold text-ink">
+    Verify Certificate
+  </h3>
+
+  <p className="mt-2 text-sm text-slate">
+    Enter your Certificate ID to verify its authenticity.
+  </p>
+
+  <form
+    action="/verify-certificate"
+    method="GET"
+    className="mt-4 flex gap-3"
+  >
+    <input
+      type="text"
+      name="id"
+      placeholder="TES-2026-XXXXXX"
+      className="flex-1 rounded-xl border border-line px-4 py-3 outline-none focus:border-teal"
+      required
+    />
+
+    <button
+      type="submit"
+      className="btn-primary"
+    >
+      Verify
+    </button>
+  </form>
+</div>
+
             <div className="mt-12 flex gap-10">
               {stats.map((s) => (
                 <div key={s.label}>
