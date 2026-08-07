@@ -125,10 +125,28 @@ doc.text(
   165
 );
     // Signature
-    doc.line(200, 175, 260, 175);
-    doc.text("Authorized Signature", 230, 183, {
-      align: "center",
-    });
+const signature = new Image();
+signature.src = "/signature.png";
+
+// Signature image
+doc.addImage(signature, "PNG", 195, 145, 60, 25);
+
+// Signature line
+doc.line(190, 175, 260, 175);
+
+// CEO Name
+doc.setFontSize(11);
+doc.setFont("helvetica", "bold");
+doc.text("Bashir Abdulkarim Liman", 225, 183, {
+  align: "center",
+});
+
+// Position
+doc.setFontSize(10);
+doc.setFont("helvetica", "normal");
+doc.text("Founder & CEO", 225, 189, {
+  align: "center",
+});
 
 const { error } = await supabase
   .from("certificates")
