@@ -71,30 +71,6 @@ doc.rect(12, 12, 273, 186);
       doc.addImage(logo, "PNG", 20, 18, 24, 24);
     }
 
-// =========================
-// Watermark
-// =========================
-if (logo) {
-  doc.saveGraphicsState();
-
-  doc.setGState(
-    new doc.GState({
-      opacity: 0.06,
-    })
-  );
-
-  doc.addImage(
-    logo,
-    "PNG",
-    78,
-    42,
-    140,
-    140
-  );
-
-  doc.restoreGraphicsState();
-}
-
     // Company
     doc.setFont("helvetica", "bold");
     doc.setFontSize(30);
