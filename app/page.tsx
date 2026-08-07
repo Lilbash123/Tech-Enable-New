@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { ReactNode, SVGProps } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -23,7 +22,7 @@ type Stat = {
 type Feature = {
   title: string;
   body: string;
-  icon: ReactNode;
+  icon: React.ReactNode;
 };
 
 type Testimonial = {
@@ -35,21 +34,21 @@ type Testimonial = {
 
 /* Small inline icon set — keeps the homepage dependency-free (no icon
    library) while still giving the "Why choose us" cards a polished mark. */
-function IconFree(props: SVGProps<SVGSVGElement>) {
+function IconFree(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" strokeWidth={1.75} stroke="currentColor" {...props}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M5 8.5c0-1.93 2.5-3.5 7-3.5s7 1.57 7 3.5-2.5 3.5-7 3.5-7 1.57-7 3.5 2.5 3.5 7 3.5 7-1.57 7-3.5" />
     </svg>
   );
 }
-function IconMentor(props: SVGProps<SVGSVGElement>) {
+function IconMentor(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" strokeWidth={1.75} stroke="currentColor" {...props}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 14a4 4 0 100-8 4 4 0 000 8zM4 21c1.2-3.2 4.2-5 8-5s6.8 1.8 8 5" />
     </svg>
   );
 }
-function IconDashboard(props: SVGProps<SVGSVGElement>) {
+function IconDashboard(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" strokeWidth={1.75} stroke="currentColor" {...props}>
       <rect x="3.5" y="3.5" width="7" height="9" rx="1.5" />
@@ -59,7 +58,7 @@ function IconDashboard(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconCertificate(props: SVGProps<SVGSVGElement>) {
+function IconCertificate(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" strokeWidth={1.75} stroke="currentColor" {...props}>
       <circle cx="12" cy="8.5" r="5.5" />
@@ -67,7 +66,7 @@ function IconCertificate(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconStar(props: SVGProps<SVGSVGElement>) {
+function IconStar(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M12 2.5l2.9 6.24 6.85.72-5.14 4.72 1.42 6.79L12 17.77l-6.03 3.2 1.42-6.79L2.25 9.46l6.85-.72L12 2.5z" />
@@ -160,7 +159,7 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-2 md:items-center md:py-28">
           <div className="animate-fade-up">
             <span className="eyebrow">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal" /> Now Enrolling
+              <span className="h-1.5 w-1.5 rounded-full bg-teal" /> Now enrolling for July
             </span>
             <h1 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
               Learn the skills that get you{" "}
