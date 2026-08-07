@@ -1,28 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function VerifyCertificatePage() {
+  const searchParams = useSearchParams();
+
   const [certificateId, setCertificateId] = useState("");
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  const verifyCertificate = async () => {
+  useEffect(() => {
+    const id = searchParams.get("id");
+
+    if (id) {
+      setCertificateId(id);
+      verifyCertificate(id);
+    }
+  }, [searchParams]);
+
+  const verifyCertificate = async (id?: string) => {
+    const certId = id || certificateId;
+
+    if (!certId) return;
+
     setLoading(true);
 
-
     const response = await fetch(
-  `/api/verify-certificate?id=${certificateId}`
-);
+      `/api/verify-certificate?id=${certId}`
+    );
 
-const data = await response.json();
+    const data = await response.json();
 
-if (!response.ok) {
-  alert(data.error);
-  setResult(null);
-} else {
-  setResult(data);
-}
+    if (!response.ok) {
+      alert(data.error);
+      setResult(null);
+    } else {
+      setResult(data);
+    }
 
     setLoading(false);
   };
@@ -42,39 +57,39 @@ if (!response.ok) {
       />
 
       <button
-        onClick={verifyCertificate}
+        onClick={() => verifyCertificate()}
         className="mt-4 rounded-lg bg-teal-600 px-6 py-3 text-white"
       >
         {loading ? "Checking..." : "Verify"}
       </button>
 
       {result && (
-  <div className="mt-8 rounded-lg border p-4">
-    <h2 className="text-xl font-bold text-green-600">
-      ✅ Certificate Verified
-    </h2>
+        <div className="mt-8 rounded-lg border p-4">
+          <h2 className="text-xl font-bold text-green-600">
+            👍  Certificate Verified
+          </h2>
 
-    <p>
-      <strong>Certificate ID:</strong>{" "}
-      {result.certificate_id}
-    </p>
+          <p>
+            <strong>Certificate ID:</strong>{" "}
+            {result.certificate_id}
+          </p>
 
-    <p>
-      <strong>Student:</strong>{" "}
-      {result.student_name}
-    </p>
+          <p>
+            <strong>Student:</strong>{" "}
+            {result.student_name}
+          </p>
 
-    <p>
-      <strong>Course:</strong>{" "}
-      {result.course_name}
-    </p>
+          <p>
+            <strong>Course:</strong>{" "}
+            {result.course_name}
+          </p>
 
-    <p>
-      <strong>Issued:</strong>{" "}
-      {new Date(result.issued_at).toLocaleString()}
-    </p>
-  </div>
-)}
+          <p>
+            <strong>Issued:</strong>{" "}
+            {new Date(result.issued_at).toLocaleString()}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
