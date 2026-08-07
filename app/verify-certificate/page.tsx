@@ -1,95 +1,81 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function VerifyCertificatePage() {
-  const searchParams = useSearchParams();
+const [certificateId, setCertificateId] = useState("");
+const [result, setResult] = useState<any>(null);
+const [loading, setLoading] = useState(false);
 
-  const [certificateId, setCertificateId] = useState("");
-  const [result, setResult] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+const verifyCertificate = async () => {
+setLoading(true);
 
-  useEffect(() => {
-    const id = searchParams.get("id");
+const response = await fetch(
 
-    if (id) {
-      setCertificateId(id);
-      verifyCertificate(id);
-    }
-  }, [searchParams]);
+/api/verify-certificate?id=${certificateId}
+);
 
-  const verifyCertificate = async (id?: string) => {
-    const certId = id || certificateId;
+const data = await response.json();
 
-    if (!certId) return;
+if (!response.ok) {
+alert(data.error);
+setResult(null);
+} else {
+setResult(data);
+}
 
-    setLoading(true);
+setLoading(false);
 
-    const response = await fetch(
-      `/api/verify-certificate?id=${certId}`
-    );
+};
 
-    const data = await response.json();
+return (
+<div className="max-w-xl mx-auto py-12 px-4">
+<h1 className="text-3xl font-bold mb-6">
+Verify Certificate
+</h1>
 
-    if (!response.ok) {
-      alert(data.error);
-      setResult(null);
-    } else {
-      setResult(data);
-    }
+<input  
+    type="text"  
+    value={certificateId}  
+    onChange={(e) => setCertificateId(e.target.value)}  
+    placeholder="Enter Certificate ID"  
+    className="w-full border rounded-lg p-3"  
+  />  
 
-    setLoading(false);
-  };
+  <button  
+    onClick={verifyCertificate}  
+    className="mt-4 rounded-lg bg-teal-600 px-6 py-3 text-white"  
+  >  
+    {loading ? "Checking..." : "Verify"}  
+  </button>  
 
-  return (
-    <div className="max-w-xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">
-        Verify Certificate
-      </h1>
+  {result && (
 
-      <input
-        type="text"
-        value={certificateId}
-        onChange={(e) => setCertificateId(e.target.value)}
-        placeholder="Enter Certificate ID"
-        className="w-full border rounded-lg p-3"
-      />
+  <div className="mt-8 rounded-lg border p-4">  
+    <h2 className="text-xl font-bold text-green-600">  
+      ✅ Certificate Verified  
+    </h2>  <p>  
+  <strong>Certificate ID:</strong>{" "}  
+  {result.certificate_id}  
+</p>  
 
-      <button
-        onClick={() => verifyCertificate()}
-        className="mt-4 rounded-lg bg-teal-600 px-6 py-3 text-white"
-      >
-        {loading ? "Checking..." : "Verify"}
-      </button>
+<p>  
+  <strong>Student:</strong>{" "}  
+  {result.student_name}  
+</p>  
 
-      {result && (
-        <div className="mt-8 rounded-lg border p-4">
-          <h2 className="text-xl font-bold text-green-600">
-            👍  Certificate Verified
-          </h2>
+<p>  
+  <strong>Course:</strong>{" "}  
+  {result.course_name}  
+</p>  
 
-          <p>
-            <strong>Certificate ID:</strong>{" "}
-            {result.certificate_id}
-          </p>
+<p>  
+  <strong>Issued:</strong>{" "}  
+  {new Date(result.issued_at).toLocaleString()}  
+</p>
 
-          <p>
-            <strong>Student:</strong>{" "}
-            {result.student_name}
-          </p>
-
-          <p>
-            <strong>Course:</strong>{" "}
-            {result.course_name}
-          </p>
-
-          <p>
-            <strong>Issued:</strong>{" "}
-            {new Date(result.issued_at).toLocaleString()}
-          </p>
-        </div>
-      )}
-    </div>
-  );
+  </div>  
+)}  
+    </div>  
+  );  
 }
