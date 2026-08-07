@@ -97,12 +97,25 @@ doc.setTextColor(0, 0, 0);
       align: "center",
     });
 
-    // Student
-    doc.setFontSize(28);
-    doc.setFont("helvetica", "bold");
-    doc.text(studentName, 148, 92, {
-      align: "center",
-    });
+    // =========================
+// Student Name (Premium)
+// =========================
+doc.setFont("times", "bold");
+doc.setFontSize(38);
+
+doc.setTextColor(25, 25, 25);
+
+doc.text(studentName, 148, 92, {
+  align: "center",
+});
+
+// Gold underline
+doc.setDrawColor(212, 175, 55);
+doc.setLineWidth(0.8);
+doc.line(85, 97, 211, 97);
+
+// Komawa default
+doc.setTextColor(0, 0, 0);
 
     doc.setFontSize(14);
     doc.setFont("helvetica", "normal");
